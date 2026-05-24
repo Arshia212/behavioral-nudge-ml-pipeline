@@ -1,0 +1,33 @@
+featureimportance.txt
+
+DATASET = synth_AF_clusters_100k.csv
+
+# Random Forest feature importance (top 10 features)
+import numpy as np
+
+importances = rf_clf.feature_importances_
+feature_names = X_train.columns
+# Get indices of top 10 important features
+top_indices = np.argsort(importances)[-10:]
+print("Top 10 Feature Importances (Random Forest):")
+for idx in reversed(top_indices):
+    print(f"  {feature_names[idx]}: {importances[idx]:.4f}")
+
+output:
+Top 10 Feature Importances (Random Forest):
+  oac_drug_Warfarin: 0.1932
+  ckd: 0.1355
+  portal_active: 0.1181
+  autonomy: 0.0719
+  has_bled: 0.0705
+  literacy_conf: 0.0566
+  low_literacy_proxy: 0.0523
+  reply_rate2: 0.0397
+  BRI: 0.0260
+  open_rate2: 0.0245
+
+This gives a quick overview of which features were most influential in the Random Forest splits. 
+However, for a multi-class problem, simple importance scores might not tell the full story. 
+We use SHAP values to understand how each feature influences the model's output for each class. 
+SHAP values provide additive feature contributions for each prediction, which we can aggregate to see global patterns.
+   
